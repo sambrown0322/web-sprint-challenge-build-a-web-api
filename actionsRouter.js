@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 const actions = require("./data/helpers/actionModel");
+const projects = require("./data/helpers/projectModel");
 
 router.get("/", (req, res) => {
   actions
@@ -32,6 +33,25 @@ router.get("/:id", (req, res) => {
     })
     .catch((err) => {
       res.status(500).json({ error: "Action info couldn't be retrieved" });
+    });
+});
+
+router.get("/pa/:id", (req, res) => {
+  const id = req.params.id;
+
+  projects
+    .getProjectActions(id)
+    .then((rez) => {
+      if (rez) {
+        res.status(200).json(rez);
+      } else {
+        res
+          .status(404)
+          .json({ message: "A project with that ID doesn't exist" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json(err);
     });
 });
 
