@@ -19,7 +19,7 @@ const actionsRouter = require("./actionsRouter");
 
 const server = express();
 
-const port = 7000;
+const port = process.env.PORT || 7000;
 
 server.use(express.json());
 server.use("/projects", projectsRouter);
